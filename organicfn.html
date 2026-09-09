@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andhra Naturels Organic Store | Pure Nature, Pure Life</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            light: '#e8f5e9',
+                            DEFAULT: '#2e7d32',
+                            dark: '#1b5e20',
+                            accent: '#fbc02d'
+                        },
+                        earth: {
+                            DEFAULT: '#8d6e63',
+                            light: '#efebe9'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Custom Styles & Utilities */
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, .font-serif { font-family: 'Playfair Display', serif; }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Parallax Backgrounds */
+        .parallax-hero {
+            background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1920');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .parallax-why {
+            background-image: url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&q=80&w=1920');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Nav Transition */
+        #navbar { transition: all 0.3s ease; }
+        .nav-scrolled {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+        }
+
+        /* SPA Transitions */
+        .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased overflow-x-hidden">
+
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 px-6 lg:px-12 bg-transparent">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" onclick="goHome(event)" class="text-2xl font-serif font-bold text-brand-dark flex items-center gap-2">
+                <i class="fa-solid fa-leaf text-brand"></i>
+                <span class="text-white drop-shadow-md transition-colors" id="logo-text">Andhra Naturels</span>
+            </a>
+            
+            <div class="hidden lg:flex space-x-8 items-center font-medium text-white drop-shadow-md transition-colors" id="nav-links">
+                <a href="#about" onclick="goHome(event)" class="hover:text-brand-accent transition">About</a>
+                <a href="#categories" onclick="goHome(event)" class="hover:text-brand-accent transition">Categories</a>
+                <a href="#products" onclick="goHome(event)" class="hover:text-brand-accent transition">Shop</a>
+                <a href="#process" onclick="goHome(event)" class="hover:text-brand-accent transition">Our Farm</a>
+                <a href="#contact" onclick="goHome(event)" class="hover:text-brand-accent transition">Contact</a>
+            </div>
+
+            <div class="hidden lg:flex items-center space-x-5 text-white drop-shadow-md transition-colors" id="nav-icons">
+                <a href="#" class="hover:text-brand-accent transition"><i class="fa-solid fa-magnifying-glass"></i></a>
+                
+                <button onclick="toggleAuthModal('login-modal')" class="font-bold hover:text-brand-accent transition uppercase text-sm">Login</button>
+                <button onclick="toggleAuthModal('register-modal')" class="bg-brand-accent text-brand-dark px-4 py-2 rounded-full font-bold hover:bg-white transition uppercase text-sm">Register</button>
+                
+                <a href="#" onclick="toggleCartModal(event)" class="hover:text-brand-accent transition relative cursor-pointer border-l border-white/20 pl-5">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span id="cart-count" class="absolute -top-2 right-[-8px] bg-brand-accent text-brand-dark text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">0</span>
+                </a>
+            </div>
+
+            <div class="lg:hidden flex items-center gap-5 text-white transition-colors" id="mobile-nav-icons">
+                <a href="#" onclick="toggleCartModal(event)" class="hover:text-brand-accent transition relative cursor-pointer">
+                    <i class="fa-solid fa-cart-shopping text-xl"></i>
+                    <span id="cart-count-mobile" class="absolute -top-2 right-[-8px] bg-brand-accent text-brand-dark text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">0</span>
+                </a>
+                <button class="text-2xl hover:text-brand-accent transition" id="mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-brand-dark/95 backdrop-blur-md z-[60] hidden flex-col items-center justify-center space-y-6 font-serif text-2xl text-white transition-opacity">
+        <button id="close-mobile-btn" class="absolute top-6 right-6 text-4xl hover:text-brand-accent transition"><i class="fa-solid fa-xmark"></i></button>
+        <a href="#about" class="mob-link hover:text-brand-accent transition">About</a>
+        <a href="#categories" class="mob-link hover:text-brand-accent transition">Categories</a>
+        <a href="#products" class="mob-link hover:text-brand-accent transition">Shop</a>
+        <a href="#process" class="mob-link hover:text-brand-accent transition">Our Farm</a>
+        <a href="#contact" class="mob-link hover:text-brand-accent transition">Contact</a>
+        <div class="w-16 h-px bg-white/20 my-4"></div>
+        <button onclick="toggleAuthModal('login-modal'); document.getElementById('close-mobile-btn').click();" class="hover:text-brand-accent transition font-bold">Login</button>
+        <button onclick="toggleAuthModal('register-modal'); document.getElementById('close-mobile-btn').click();" class="bg-brand-accent text-brand-dark px-8 py-2 rounded-full hover:bg-white transition font-bold">Register</button>
+    </div>
+
+    <div id="main-view">
+        <header class="relative h-screen flex items-center justify-center parallax-hero">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="relative z-10 text-center px-4 max-w-4xl mx-auto reveal active">
+                <span class="text-brand-accent font-semibold tracking-widest uppercase text-sm mb-4 block">100% Certified Organic</span>
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                    Pure Nature,<br>Pure Life.
+                </h1>
+                <p class="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl mx-auto">
+                    Rooted in the fertile lands of Andhra and Telangana, we bring you chemical-free, sustainably farmed produce directly from local farmers to your table.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#products" class="px-8 py-4 bg-brand hover:bg-brand-dark text-white rounded-full font-medium transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        Shop Organic Now
+                    </a>
+                    <a href="#process" class="px-8 py-4 glass text-white hover:bg-white/30 rounded-full font-medium transition duration-300">
+                        Explore Our Farms
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <section id="about" class="py-20 bg-earth-light relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12">
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <div class="lg:w-1/2 relative reveal">
+                        <img src="https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?auto=format&fit=crop&q=80&w=800" alt="Farmer holding fresh vegetables" class="rounded-2xl shadow-2xl z-10 relative">
+                        <div class="absolute -bottom-6 -right-6 bg-brand-accent p-6 rounded-2xl z-20 shadow-xl hidden md:block">
+                            <p class="font-serif text-3xl font-bold text-brand-dark">15+</p>
+                            <p class="text-sm font-medium text-brand-dark">Years of Organic Farming</p>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 reveal">
+                        <h2 class="text-sm font-bold text-brand uppercase tracking-wider mb-2">Our Story</h2>
+                        <h3 class="text-4xl font-serif font-bold text-gray-900 mb-6">Reviving Traditional Wisdom.</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Andhra Naturels was born out of a simple desire: to eat the way nature intended. We partner closely with over 500 small-scale farmers across the Deccan Plateau who practice zero-budget natural farming. 
+                        </p>
+                        <p class="text-gray-600 mb-8 leading-relaxed">
+                            Every grain, fruit, and spice we offer is a testament to our commitment to soil health, biodiversity, and community empowerment. By choosing us, you aren't just buying food; you are supporting an ecosystem.
+                        </p>
+                        <a href="#" class="text-brand font-semibold border-b-2 border-brand pb-1 hover:text-brand-dark transition">Read our full mission <i class="fa-solid fa-arrow-right ml-2"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="categories" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12 text-center reveal">
+                <h2 class="text-sm font-bold text-brand uppercase tracking-wider mb-2">Shop by Category</h2>
+                <h3 class="text-4xl font-serif font-bold text-black mb-12">Bounty of Nature</h3>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <a href="#" onclick="loadCategory(event, 'veggies')" class="group relative rounded-2xl overflow-hidden shadow-lg h-64 hover-lift">
+                        <img src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&q=80&w=600" alt="Fresh Vegetables" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                            <h4 class="text-xl font-medium text-white font-serif">Farm Fresh Veggies</h4>
+                        </div>
+                    </a>
+                    <a href="#" onclick="loadCategory(event, 'fruits')" class="group relative rounded-2xl overflow-hidden shadow-lg h-64 hover-lift">
+                        <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=600" alt="Fruits" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                            <h4 class="text-xl font-medium text-white font-serif">Seasonal Fruits</h4>
+                        </div>
+                    </a>
+                    <a href="#" onclick="loadCategory(event, 'spices')" class="group relative rounded-2xl overflow-hidden shadow-lg h-64 hover-lift">
+                        <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=600" alt="Spices" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                            <h4 class="text-xl font-medium text-white font-serif">Aromatic Spices</h4>
+                        </div>
+                    </a>
+                    <a href="#" onclick="loadCategory(event, 'oils')" class="group relative rounded-2xl overflow-hidden shadow-lg h-64 hover-lift">
+                        <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&q=80&w=600" alt="Cold Pressed Oils" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                            <h4 class="text-xl font-medium text-white font-serif">Cold Pressed Oils</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="products" class="py-20 bg-brand-light">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12">
+                <div class="flex justify-between items-end mb-12 reveal">
+                    <div>
+                        <h2 class="text-sm font-bold text-brand uppercase tracking-wider mb-2">Our Bestsellers</h2>
+                        <h3 class="text-4xl font-serif font-bold text-gray-900">Featured Products</h3>
+                    </div>
+                    <a href="#" class="hidden md:block text-brand font-semibold hover:text-brand-dark transition">View All Products <i class="fa-solid fa-arrow-right ml-2"></i></a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden reveal group">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&q=80&w=600" alt="Guntur Chilli Powder" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                            <div class="absolute top-4 left-4 bg-brand text-white text-xs font-bold px-3 py-1 rounded-full">Organic</div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="text-xl font-serif font-semibold text-gray-900">Pounded Guntur Chilli</h4>
+                                <span class="text-lg font-bold text-brand">₹250</span>
+                            </div>
+                            <p class="text-sm text-gray-500 mb-4">500g | Authentic & Spicy</p>
+                            <button onclick="addToCart('Pounded Guntur Chilli', 250)" class="w-full py-3 border-2 border-brand text-brand hover:bg-brand hover:text-white rounded-lg font-medium transition duration-300">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden reveal group delay-100">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1620706857370-e1b9770e8bb1?auto=format&fit=crop&q=80&w=600" alt="Raw Forest Honey" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                            <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark text-xs font-bold px-3 py-1 rounded-full">Bestseller</div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="text-xl font-serif font-semibold text-gray-900">Wild Forest Honey</h4>
+                                <span class="text-lg font-bold text-brand">₹450</span>
+                            </div>
+                            <p class="text-sm text-gray-500 mb-4">250g | Unprocessed</p>
+                            <button onclick="addToCart('Wild Forest Honey', 450)" class="w-full py-3 border-2 border-brand text-brand hover:bg-brand hover:text-white rounded-lg font-medium transition duration-300">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden reveal group delay-200">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=600" alt="Cold Pressed Groundnut Oil" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="text-xl font-serif font-semibold text-gray-900">Wood-Pressed Groundnut Oil</h4>
+                                <span class="text-lg font-bold text-brand">₹320</span>
+                            </div>
+                            <p class="text-sm text-gray-500 mb-4">1 Litre | Cold Extracted</p>
+                            <button onclick="addToCart('Wood-Pressed Groundnut Oil', 320)" class="w-full py-3 border-2 border-brand text-brand hover:bg-brand hover:text-white rounded-lg font-medium transition duration-300">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center md:hidden">
+                    <a href="#" class="text-brand font-semibold hover:text-brand-dark transition">View All Products <i class="fa-solid fa-arrow-right ml-2"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12 text-center reveal">
+                <h2 class="text-4xl font-serif font-bold text-gray-900 mb-16">Why Go Organic?</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-brand-light rounded-full flex items-center justify-center text-3xl text-brand mb-6 hover-lift">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Better Health</h4>
+                        <p class="text-gray-600 text-sm">Free from synthetic pesticides and harmful fertilizers, ensuring purer nutrition for your family.</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-brand-light rounded-full flex items-center justify-center text-3xl text-brand mb-6 hover-lift">
+                            <i class="fa-solid fa-seedling"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Higher Nutrition</h4>
+                        <p class="text-gray-600 text-sm">Organically grown crops have been shown to contain higher levels of essential vitamins and antioxidants.</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-brand-light rounded-full flex items-center justify-center text-3xl text-brand mb-6 hover-lift">
+                            <i class="fa-solid fa-earth-asia"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Environmental Safety</h4>
+                        <p class="text-gray-600 text-sm">Promotes soil fertility, conserves water, and reduces pollution, safeguarding our planet's future.</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-20 h-20 bg-brand-light rounded-full flex items-center justify-center text-3xl text-brand mb-6 hover-lift">
+                            <i class="fa-solid fa-utensils"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Superior Taste</h4>
+                        <p class="text-gray-600 text-sm">Well-balanced soil yields produce that actually tastes the way nature intended—rich and flavorful.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 parallax-why relative flex items-center">
+            <div class="absolute inset-0 bg-brand-dark/40 mix-blend-multiply"></div>
+            <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 w-full reveal">
+                <div class="lg:w-1/2 ml-auto glass p-8 md:p-12 rounded-3xl text-white">
+                    <h3 class="text-3xl md:text-4xl font-serif font-bold mb-6">The Andhra Naturels Promise</h3>
+                    <ul class="space-y-6">
+                        <li class="flex items-start gap-4">
+                            <div class="mt-1 bg-brand-accent text-brand-dark rounded-full w-8 h-8 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-1">Direct from Farmers</h4>
+                                <p class="text-white/80 text-sm">We cut out the middlemen, ensuring fair wages for farmers and affordable prices for you.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="mt-1 bg-brand-accent text-brand-dark rounded-full w-8 h-8 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-1">Stringent Quality Checks</h4>
+                                <p class="text-white/80 text-sm">Every batch undergoes rigorous testing to guarantee zero chemical residue.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="mt-1 bg-brand-accent text-brand-dark rounded-full w-8 h-8 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-1">Eco-friendly Packaging</h4>
+                                <p class="text-white/80 text-sm">We use biodegradable and recyclable materials to minimize our carbon footprint.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12 text-center reveal">
+                <h2 class="text-sm font-bold text-brand uppercase tracking-wider mb-2">Our Process</h2>
+                <h3 class="text-4xl font-serif font-bold text-gray-900 mb-16">From Seed to Spoon</h3>
+                
+                <div class="flex flex-col md:flex-row justify-between items-center relative">
+                    <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-200 -z-10 transform -translate-y-1/2"></div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 w-full md:w-1/4 mb-8 md:mb-0 relative z-10 hover-lift">
+                        <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center text-2xl mx-auto mb-4 border-4 border-white shadow-md">1</div>
+                        <h4 class="font-bold text-lg mb-2">Cultivation</h4>
+                        <p class="text-sm text-gray-600">Grown using ancient, natural farming techniques in chemical-free soil.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 w-full md:w-1/4 mb-8 md:mb-0 relative z-10 hover-lift">
+                        <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center text-2xl mx-auto mb-4 border-4 border-white shadow-md">2</div>
+                        <h4 class="font-bold text-lg mb-2">Harvesting</h4>
+                        <p class="text-sm text-gray-600">Hand-picked at peak ripeness to ensure maximum nutritional value and flavor.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 w-full md:w-1/4 mb-8 md:mb-0 relative z-10 hover-lift">
+                        <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center text-2xl mx-auto mb-4 border-4 border-white shadow-md">3</div>
+                        <h4 class="font-bold text-lg mb-2">Processing</h4>
+                        <p class="text-sm text-gray-600">Minimal, cold-pressed processing to retain essential natural oils and vitamins.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 w-full md:w-1/4 relative z-10 hover-lift">
+                        <div class="w-16 h-16 bg-brand text-white rounded-full flex items-center justify-center text-2xl mx-auto mb-4 border-4 border-white shadow-md">4</div>
+                        <h4 class="font-bold text-lg mb-2">Delivery</h4>
+                        <p class="text-sm text-gray-600">Delivered fresh and safe to your doorstep in eco-friendly packaging.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-brand text-white">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-8 reveal">
+                <div class="md:w-2/3">
+                    <span class="bg-brand-accent text-brand-dark font-bold px-3 py-1 rounded-full text-sm uppercase tracking-wider mb-4 inline-block">Limited Time Deal</span>
+                    <h3 class="text-3xl md:text-5xl font-serif font-bold mb-4">Get 20% Off Your First Monthly Grocery Basket</h3>
+                    <p class="text-brand-light text-lg">Subscribe to our monthly essentials basket and ensure a steady supply of health for your family. Use code: <span class="font-bold text-brand-accent">NATURE20</span></p>
+                </div>
+                <div class="md:w-1/3 text-center md:text-right w-full">
+                    <a href="#products" class="inline-block bg-white text-brand font-bold py-4 px-10 rounded-full shadow-xl hover:bg-gray-100 transition duration-300 w-full md:w-auto">Claim Offer Now</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-earth-light">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12 text-center reveal">
+                <h2 class="text-sm font-bold text-brand uppercase tracking-wider mb-2">Testimonials</h2>
+                <h3 class="text-4xl font-serif font-bold text-gray-900 mb-16">What Our Community Says</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-2xl shadow-sm text-left hover-lift relative">
+                        <i class="fa-solid fa-quote-right text-4xl text-brand-light absolute top-6 right-6"></i>
+                        <div class="flex text-brand-accent mb-4 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-600 mb-6 italic">"The quality of their cold-pressed groundnut oil is exactly like what my grandmother used to make. You can literally smell the purity. Highly recommended!"</p>
+                        <div class="flex items-center gap-4">
+                            <img src="https://ui-avatars.com/api/?name=Kavitha+R&background=2e7d32&color=fff" alt="Customer" class="w-12 h-12 rounded-full">
+                            <div>
+                                <h4 class="font-bold text-gray-900">Kavitha R.</h4>
+                                <p class="text-xs text-gray-500">Regular Customer</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-8 rounded-2xl shadow-sm text-left hover-lift relative">
+                        <i class="fa-solid fa-quote-right text-4xl text-brand-light absolute top-6 right-6"></i>
+                        <div class="flex text-brand-accent mb-4 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-600 mb-6 italic">"Transitioning my family to organic food was daunting until I found Andhra Naturels. Their weekly vegetable box delivery is a lifesaver. Fresh, crisp, and safe."</p>
+                        <div class="flex items-center gap-4">
+                            <img src="https://ui-avatars.com/api/?name=Srinivas+V&background=2e7d32&color=fff" alt="Customer" class="w-12 h-12 rounded-full">
+                            <div>
+                                <h4 class="font-bold text-gray-900">Srinivas V.</h4>
+                                <p class="text-xs text-gray-500">Health Enthusiast</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-8 rounded-2xl shadow-sm text-left hover-lift relative">
+                        <i class="fa-solid fa-quote-right text-4xl text-brand-light absolute top-6 right-6"></i>
+                        <div class="flex text-brand-accent mb-4 text-sm">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <p class="text-gray-600 mb-6 italic">"The wild forest honey is just phenomenal. Not overly sweet, complex flavors, and hasn't crystallized. You can tell they source directly from the tribals."</p>
+                        <div class="flex items-center gap-4">
+                            <img src="https://ui-avatars.com/api/?name=Priya+M&background=2e7d32&color=fff" alt="Customer" class="w-12 h-12 rounded-full">
+                            <div>
+                                <h4 class="font-bold text-gray-900">Priya M.</h4>
+                                <p class="text-xs text-gray-500">Food Blogger</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12 reveal">
+                <div class="flex justify-between items-end mb-12">
+                    <div>
+                        <h2 class="text-sm font-bold text-brand uppercase tracking-wider mb-2">Organic Living</h2>
+                        <h3 class="text-4xl font-serif font-bold text-gray-900">Latest Articles & Tips</h3>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <article class="rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 border border-gray-100">
+                        <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=600" alt="Healthy eating" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <span class="text-xs font-bold text-brand uppercase tracking-wider">Nutrition</span>
+                            <h4 class="text-xl font-serif font-bold mt-2 mb-3 hover:text-brand transition"><a href="#">5 Easy Ways to Incorporate Millets into Your Diet</a></h4>
+                            <p class="text-gray-600 text-sm mb-4">Discover the ancient grains making a massive comeback for their incredible health benefits...</p>
+                            <a href="#" class="text-brand font-semibold text-sm hover:text-brand-dark">Read More <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </article>
+                    
+                    <article class="rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 border border-gray-100">
+                        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&q=80&w=600" alt="Farm" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <span class="text-xs font-bold text-brand uppercase tracking-wider">Sustainability</span>
+                            <h4 class="text-xl font-serif font-bold mt-2 mb-3 hover:text-brand transition"><a href="#">Understanding Zero Budget Natural Farming</a></h4>
+                            <p class="text-gray-600 text-sm mb-4">Learn how our farmers are healing the soil and growing crops without any chemical inputs...</p>
+                            <a href="#" class="text-brand font-semibold text-sm hover:text-brand-dark">Read More <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </article>
+                    
+                    <article class="rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 border border-gray-100">
+                        <img src="https://images.unsplash.com/photo-1601648764658-cf37e8c89b70?auto=format&fit=crop&q=80&w=600" alt="Kitchen setup" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <span class="text-xs font-bold text-brand uppercase tracking-wider">Lifestyle</span>
+                            <h4 class="text-xl font-serif font-bold mt-2 mb-3 hover:text-brand transition"><a href="#">How to Store Organic Produce Properly</a></h4>
+                            <p class="text-gray-600 text-sm mb-4">Organic vegetables spoil faster because they lack preservatives. Here is how to keep them fresh...</p>
+                            <a href="#" class="text-brand font-semibold text-sm hover:text-brand-dark">Read More <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-earth relative overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-brand-accent opacity-10 rounded-full blur-3xl"></div>
+            
+            <div class="max-w-4xl mx-auto px-6 text-center relative z-10 reveal">
+                <i class="fa-regular fa-envelope text-4xl text-brand-accent mb-4"></i>
+                <h3 class="text-3xl md:text-4xl font-serif font-bold text-white mb-4">Join Our Organic Community</h3>
+                <p class="text-earth-light mb-8 max-w-2xl mx-auto">Subscribe to receive weekly health tips, sustainable living guides, and exclusive discounts directly in your inbox.</p>
+                
+                <form class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto" onsubmit="event.preventDefault(); alert('Subscribed!');">
+                    <input type="email" placeholder="Your email address" required class="flex-1 px-6 py-4 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-accent bg-white/90">
+                    <button type="submit" class="px-8 py-4 bg-brand-accent text-brand-dark font-bold rounded-full hover:bg-white transition duration-300 shadow-lg">Subscribe</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6 lg:px-12 reveal">
+                <div class="flex flex-col lg:flex-row gap-16">
+                    <div class="lg:w-1/3">
+                        <h2 class="text-sm font-bold text-brand uppercase tracking-wider mb-2">Get In Touch</h2>
+                        <h3 class="text-4xl font-serif font-bold text-gray-900 mb-8">We'd love to hear from you</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-brand-light text-brand rounded-full flex items-center justify-center shrink-0 text-xl">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-900 mb-1">Our Store</h4>
+                                    <p class="text-gray-600 text-sm leading-relaxed">Gajuwaka,<br>vizag,  Andhra pradesh,<br>India</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-brand-light text-brand rounded-full flex items-center justify-center shrink-0 text-xl">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-900 mb-1">Call Us</h4>
+                                    <p class="text-gray-600 text-sm">+91 89196 95571<br>Mon-Sat, 9am - 8pm</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-brand-light text-brand rounded-full flex items-center justify-center shrink-0 text-xl">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-900 mb-1">Email Us</h4>
+                                    <p class="text-gray-600 text-sm">info@zigzex.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:w-2/3 bg-gray-50 p-8 md:p-10 rounded-2xl border border-gray-100 shadow-sm">
+                        <form onsubmit="event.preventDefault(); alert('Message Sent!');">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                    <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition" placeholder="John" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                    <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition" placeholder="Doe">
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                <input type="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition" placeholder="john@example.com" required>
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition" placeholder="How can we help you?" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full md:w-auto px-10 py-4 bg-brand text-white font-bold rounded-lg hover:bg-brand-dark transition duration-300 shadow-md">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div> <div id="category-view" class="hidden min-h-screen bg-brand-light pt-32 pb-24 fade-in">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <button onclick="goHome(event)" class="mb-8 text-brand font-bold hover:text-brand-dark transition flex items-center gap-2">
+                <i class="fa-solid fa-arrow-left"></i> Back to Categories
+            </button>
+            
+            <div class="mb-12">
+                <h2 class="text-sm font-bold text-brand uppercase tracking-wider mb-2" id="category-subtitle">Explore Collection</h2>
+                <h3 class="text-4xl md:text-5xl font-serif font-bold text-gray-900" id="category-title">Category Name</h3>
+            </div>
+
+            <div id="category-product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                </div>
+        </div>
+    </div>
+
+    <footer class="bg-brand-dark text-white pt-20 pb-10 border-t border-brand">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <a href="#" class="text-2xl font-serif font-bold text-white flex items-center gap-2 mb-6">
+                        <i class="fa-solid fa-leaf text-brand-accent"></i>
+                        Andhra Naturels
+                    </a>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">Promoting authentic organic living by connecting conscious consumers with traditional farmers of the Deccan plateau.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full glass-dark flex items-center justify-center hover:bg-brand-accent hover:text-brand-dark transition"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full glass-dark flex items-center justify-center hover:bg-brand-accent hover:text-brand-dark transition"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full glass-dark flex items-center justify-center hover:bg-brand-accent hover:text-brand-dark transition"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full glass-dark flex items-center justify-center hover:bg-brand-accent hover:text-brand-dark transition"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold mb-6 font-serif">Quick Links</h4>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li><a href="#about" class="hover:text-brand-accent transition">About Us</a></li>
+                        <li><a href="#products" class="hover:text-brand-accent transition">Shop Organic</a></li>
+                        <li><a href="#process" class="hover:text-brand-accent transition">Our Farms</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition">Blog & Recipes</a></li>
+                        <li><a href="#contact" class="hover:text-brand-accent transition">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold mb-6 font-serif">Customer Care</h4>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-brand-accent transition">Shipping Policy</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition">Returns & Refunds</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition">FAQ</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition">Track Order</a></li>
+                        <li><a href="#" class="hover:text-brand-accent transition">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold mb-6 font-serif">We Are Certified</h4>
+                    <p class="text-sm text-gray-300 mb-4">Our products undergo strict quality checks and meet national organic standards.</p>
+                    <div class="flex gap-4">
+                        <div class="w-16 h-16 bg-white/10 rounded border border-white/20 flex items-center justify-center text-xs text-center p-1">FSSAI</div>
+                        <div class="w-16 h-16 bg-white/10 rounded border border-white/20 flex items-center justify-center text-xs text-center p-1">Jaivik Bharat</div>
+                        <div class="w-16 h-16 bg-white/10 rounded border border-white/20 flex items-center justify-center text-xs text-center p-1">India Organic</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-t border-white/10 pt-8">
+                <div class="flex flex-col gap-2">
+                    <p class="text-sm text-gray-400">© 2026 ZIGZEX IT SERVICES PRIVATE LIMITED | All rights reserved.</p>
+                    <div class="flex items-center gap-2 text-gray-400 text-sm">
+                        <span>Secure Checkout:</span>
+                        <i class="fa-brands fa-cc-visa text-xl"></i>
+                        <i class="fa-brands fa-cc-mastercard text-xl"></i>
+                        <i class="fa-brands fa-cc-paypal text-xl"></i>
+                    </div>
+                </div>
+                <div class="w-full md:w-auto overflow-hidden rounded shadow-lg border border-white/10">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.580392401738!2d83.3578976!3d17.8138473!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a395bd9ae7f68df%3A0x3f38310fca4e9385!2sZIGZEX%20IT%20SERVICES%20PRIVATE%20LIMITED!5e1!3m2!1sen!2sin!4v1788977553514!5m2!1sen!2sin" width="300" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/918919695571" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-2xl hover:scale-110 transition-transform z-50">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <div id="login-modal" class="fixed inset-0 bg-black/60 z-[100] hidden flex items-center justify-center p-4 transition-opacity backdrop-blur-sm">
+        <div class="bg-white rounded-2xl w-full max-w-md p-8 relative shadow-2xl">
+            <button onclick="toggleAuthModal('login-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-brand transition-colors">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+            <h2 class="text-3xl font-serif font-bold mb-6 text-gray-900 text-center">Welcome Back</h2>
+            <form onsubmit="event.preventDefault(); alert('Login Successful!'); toggleAuthModal('login-modal');">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                    <input type="text" required class="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-brand focus:outline-none">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" required class="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-brand focus:outline-none">
+                </div>
+                <button type="submit" class="w-full bg-brand text-white py-3 rounded-lg font-bold hover:bg-brand-dark transition">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="register-modal" class="fixed inset-0 bg-black/60 z-[100] hidden flex items-center justify-center p-4 transition-opacity backdrop-blur-sm">
+        <div class="bg-white rounded-2xl w-full max-w-md p-8 relative shadow-2xl">
+            <button onclick="toggleAuthModal('register-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-brand transition-colors">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+            <h2 class="text-3xl font-serif font-bold mb-6 text-gray-900 text-center">Create Account</h2>
+            <form onsubmit="event.preventDefault(); alert('Registration Successful!'); toggleAuthModal('register-modal');">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" required class="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-brand focus:outline-none">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                    <input type="text" required class="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-brand focus:outline-none">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" required class="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-brand focus:outline-none">
+                </div>
+                <button type="submit" class="w-full bg-brand text-white py-3 rounded-lg font-bold hover:bg-brand-dark transition">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="fixed inset-0 bg-black/60 z-[100] hidden flex items-center justify-center p-4 transition-opacity backdrop-blur-sm">
+        <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 relative shadow-2xl">
+            <button onclick="toggleCartModal(event)" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+            
+            <h2 class="text-3xl font-serif font-bold mb-2 text-brand-dark border-b pb-4">Your Cart & Checkout</h2>
+            
+            <div id="cart-items-container" class="mb-6 space-y-3 mt-4 max-h-48 overflow-y-auto pr-2">
+                </div>
+            
+            <div class="text-right font-bold text-2xl mb-8 text-brand-dark">
+                Total Amount: ₹<span id="cart-total-amount">0</span>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4 font-serif">Delivery & Billing Details</h3>
+            <form id="billing-form" onsubmit="processCheckout(event)">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                        <input type="text" id="bill-name" required placeholder="Enter your full name" class="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-brand focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                        <input type="tel" id="bill-phone" required placeholder="Enter your mobile number" class="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-brand focus:outline-none">
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Complete Delivery Address</label>
+                    <textarea id="bill-address" required placeholder="House number, Street, Landmark, City, Pincode" class="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-brand focus:outline-none" rows="3"></textarea>
+                </div>
+
+                <div class="bg-brand-light p-4 rounded-lg mb-6 flex items-start gap-3">
+                    <i class="fa-brands fa-whatsapp text-2xl text-brand mt-1"></i>
+                    <p class="text-sm text-gray-700">Clicking the button below will securely send your order details and delivery information directly to our WhatsApp support team to complete the payment and confirm the order.</p>
+                </div>
+                
+                <button type="submit" class="w-full bg-brand text-white py-4 rounded-lg font-bold hover:bg-brand-dark transition shadow-lg text-lg flex justify-center items-center gap-2">
+                    <i class="fa-brands fa-whatsapp"></i> Checkout via WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. SPA DATA (10 Products per Category) ---
+        const productsDB = {
+            veggies: {
+                title: "Farm Fresh Veggies",
+                items: [
+                    { name: "Organic Tomatoes", price: 60, unit: "1 kg", img: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Red Onions", price: 45, unit: "1 kg", img: "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Organic Potatoes", price: 40, unit: "1 kg", img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Fresh Carrots", price: 55, unit: "500 g", img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Green Bell Peppers", price: 80, unit: "500 g", img: "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Fresh Broccoli", price: 120, unit: "1 pc", img: "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Organic Spinach", price: 30, unit: "1 bunch", img: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Green Cabbage", price: 50, unit: "1 pc", img: "https://images.unsplash.com/photo-1598514982205-f36b96d1e8d4?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Cauliflower", price: 60, unit: "1 pc", img: "https://plus.unsplash.com/premium_photo-1711684803510-6f05fa515378?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                    { name: "Lady Finger (Okra)", price: 45, unit: "500 g", img: "https://images.unsplash.com/photo-1425543103986-22abb7d7e8d2?auto=format&fit=crop&q=80&w=600" }
+                ]
+            },
+            fruits: {
+                title: "Seasonal Fruits",
+                items: [
+                    { name: "Alphonso Mangoes", price: 350, unit: "1 Dozen", img: "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Robusta Bananas", price: 60, unit: "1 Dozen", img: "https://images.unsplash.com/photo-1603833665858-e61d17a86224?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Kashmiri Apples", price: 180, unit: "1 kg", img: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                    { name: "Nagpur Oranges", price: 120, unit: "1 kg", img: "https://images.unsplash.com/photo-1547514701-42782101795e?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Fresh Papaya", price: 80, unit: "1 pc", img: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Watermelon", price: 90, unit: "1 pc", img: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                    { name: "Black Grapes", price: 150, unit: "500 g", img: "https://images.unsplash.com/photo-1596363505729-4190a9506133?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Pineapple", price: 100, unit: "1 pc", img: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Pomegranate", price: 200, unit: "1 kg", img: "https://plus.unsplash.com/premium_photo-1668076515507-c5bc223c99a4?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                    { name: "Guava", price: 90, unit: "1 kg", img: "https://images.unsplash.com/photo-1536511132770-e5058c7e8c46?auto=format&fit=crop&q=80&w=600" }
+                ]
+            },
+            spices: {
+                title: "Aromatic Spices",
+                items: [
+                    { name: "Salem Turmeric Powder", price: 120, unit: "250 g", img: "https://5.imimg.com/data5/PU/MU/RK/SELLER-8309030/salem-turmeric-powder-1000x1000.jpg" },
+                    { name: "Guntur Chilli Powder", price: 140, unit: "250 g", img: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Coriander Powder", price: 90, unit: "250 g", img: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Cumin Seeds (Jeera)", price: 160, unit: "200 g", img: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Black Pepper Whole", price: 250, unit: "100 g", img: "https://images.unsplash.com/photo-1591801058986-9e28e68670f7?q=80&w=1228&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                    { name: "Ceylon Cinnamon", price: 180, unit: "50 g", img: "https://images.unsplash.com/photo-1553499944-e4297a0af1bd?q=80&w=1064&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                    { name: "Green Cardamom", price: 300, unit: "50 g", img: "https://images.unsplash.com/photo-1642255521852-7e7c742ac58f?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                    { name: "Cloves", price: 220, unit: "50 g", img: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Mustard Seeds", price: 60, unit: "250 g", img: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Organic Garam Masala", price: 180, unit: "100 g", img: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=600" }
+                ]
+            },
+            oils: {
+                title: "Cold Pressed Oils",
+                items: [
+                    { name: "Wood-Pressed Groundnut Oil", price: 320, unit: "1 Litre", img: "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Cold Pressed Coconut Oil", price: 380, unit: "1 Litre", img: "https://images.unsplash.com/photo-1588413333412-82148535db53?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+                    { name: "Sesame Oil (Gingelly)", price: 420, unit: "1 Litre", img: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Yellow Mustard Oil", price: 280, unit: "1 Litre", img: "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Cold Pressed Sunflower Oil", price: 260, unit: "1 Litre", img: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Extra Virgin Olive Oil", price: 850, unit: "500 ml", img: "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Sweet Almond Oil", price: 450, unit: "200 ml", img: "https://media.istockphoto.com/id/828305682/photo/almond-oil-in-glass-bottle-and-almonds-on-wooden-table.jpg?s=2048x2048&w=is&k=20&c=0D8C3yxk339PltidWZkufaQu2eIzVIiwVi1_Zo9XLwY=" },
+                    { name: "Pure Castor Oil", price: 220, unit: "250 ml", img: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Neem Oil", price: 180, unit: "250 ml", img: "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=600" },
+                    { name: "Flaxseed Oil", price: 350, unit: "250 ml", img: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&q=80&w=600" }
+                ]
+            }
+        };
+
+        // --- 2. SPA LOGIC (Hide/Show Sections) ---
+        const mainView = document.getElementById('main-view');
+        const categoryView = document.getElementById('category-view');
+        const categoryGrid = document.getElementById('category-product-grid');
+        const categoryTitle = document.getElementById('category-title');
+
+        function loadCategory(e, categoryId) {
+            e.preventDefault();
+            
+            // Get Data
+            const data = productsDB[categoryId];
+            if(!data) return;
+
+            // Set Title
+            categoryTitle.innerText = data.title;
+
+            // Generate Products HTML matching original design
+            categoryGrid.innerHTML = '';
+            data.items.forEach((item, index) => {
+                categoryGrid.innerHTML += `
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden group fade-in" style="animation-delay: ${index * 0.05}s">
+                        <div class="relative h-48 sm:h-56 overflow-hidden">
+                            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                            <div class="absolute top-4 left-4 bg-brand text-white text-xs font-bold px-3 py-1 rounded-full">Organic</div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-1">
+                                <h4 class="text-lg font-serif font-semibold text-gray-900 leading-tight">${item.name}</h4>
+                            </div>
+                            <div class="mb-4">
+                                <span class="text-xl font-bold text-brand">₹${item.price}</span>
+                                <span class="text-xs text-gray-500 ml-1">/ ${item.unit}</span>
+                            </div>
+                            <button onclick="addToCart('${item.name}', ${item.price})" class="w-full py-2.5 border-2 border-brand text-brand hover:bg-brand hover:text-white rounded-lg font-medium transition duration-300">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Toggle Views
+            mainView.classList.add('hidden');
+            categoryView.classList.remove('hidden');
+            
+            // Scroll to top to see the new category cleanly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goHome(e) {
+            if(e && e.preventDefault) e.preventDefault();
+            categoryView.classList.add('hidden');
+            mainView.classList.remove('hidden');
+            
+            // If it was a nav link, allow normal scrolling after a tiny timeout to let the view display
+            if(e && e.target.getAttribute('href') && e.target.getAttribute('href').startsWith('#')) {
+                setTimeout(() => {
+                    const targetId = e.target.getAttribute('href').substring(1);
+                    const el = document.getElementById(targetId);
+                    if(el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 50);
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // --- 3. UI/SCROLL/NAVBAR LOGIC ---
+        const navbar = document.getElementById('navbar');
+        const logoText = document.getElementById('logo-text');
+        const navLinks = document.getElementById('nav-links');
+        const navIcons = document.getElementById('nav-icons');
+        const mobileNavIcons = document.getElementById('mobile-nav-icons');
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileOverlay = document.getElementById('mobile-menu-overlay');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+                
+                logoText.classList.remove('text-white', 'drop-shadow-md');
+                logoText.classList.add('text-gray-900');
+                
+                navLinks.classList.remove('text-white', 'drop-shadow-md');
+                navLinks.classList.add('text-gray-800');
+                
+                navIcons.classList.remove('text-white', 'drop-shadow-md');
+                navIcons.classList.add('text-gray-800');
+                
+                mobileNavIcons.classList.remove('text-white');
+                mobileNavIcons.classList.add('text-gray-800');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+                
+                logoText.classList.add('text-white', 'drop-shadow-md');
+                logoText.classList.remove('text-gray-900');
+                
+                navLinks.classList.add('text-white', 'drop-shadow-md');
+                navLinks.classList.remove('text-gray-800');
+                
+                navIcons.classList.add('text-white', 'drop-shadow-md');
+                navIcons.classList.remove('text-gray-800');
+                
+                mobileNavIcons.classList.add('text-white');
+                mobileNavIcons.classList.remove('text-gray-800');
+            }
+        });
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+        const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+        const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+        revealElements.forEach(el => {
+            if (!el.classList.contains('active')) revealObserver.observe(el);
+        });
+
+        // Mobile Menu Toggle
+        mobileBtn.addEventListener('click', () => {
+            mobileOverlay.classList.remove('hidden');
+            mobileOverlay.classList.add('flex');
+        });
+        
+        document.getElementById('close-mobile-btn').addEventListener('click', () => {
+            mobileOverlay.classList.add('hidden');
+            mobileOverlay.classList.remove('flex');
+        });
+        
+        document.querySelectorAll('.mob-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                mobileOverlay.classList.add('hidden');
+                mobileOverlay.classList.remove('flex');
+                if (link.getAttribute('href').startsWith('#')) {
+                    goHome(e);
+                }
+            });
+        });
+
+        // --- 4. CART, AUTH & WHATSAPP LOGIC ---
+        let cart = [];
+
+        function addToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({ name: name, price: price, qty: 1 });
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cart-count').innerText = totalItems;
+            document.getElementById('cart-count-mobile').innerText = totalItems;
+            
+            const cartContainer = document.getElementById('cart-items-container');
+            cartContainer.innerHTML = '';
+            let grandTotal = 0;
+            
+            if (cart.length === 0) {
+                cartContainer.innerHTML = '<p class="text-gray-500 italic p-4 text-center bg-gray-50 rounded-lg">Your cart is currently empty. Add some healthy organics!</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    const itemTotal = item.price * item.qty;
+                    grandTotal += itemTotal;
+                    
+                    cartContainer.innerHTML += `
+                        <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-100">
+                            <div>
+                                <h5 class="font-bold text-gray-800">${item.name}</h5>
+                                <p class="text-sm text-gray-500">₹${item.price} x ${item.qty}</p>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="font-bold text-brand">₹${itemTotal}</span>
+                                <button type="button" onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-600 transition p-2">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('cart-total-amount').innerText = grandTotal;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function toggleCartModal(e) {
+            if(e) e.preventDefault();
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) updateCartUI();
+        }
+
+        function toggleAuthModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.toggle('hidden');
+        }
+
+        function processCheckout(e) {
+            e.preventDefault();
+            
+            if (cart.length === 0) {
+                alert("Your cart is empty! Please add products before checking out.");
+                return;
+            }
+            
+            const name = document.getElementById('bill-name').value;
+            const phone = document.getElementById('bill-phone').value;
+            const address = document.getElementById('bill-address').value;
+            let orderTotal = 0;
+            
+            let whatsappMsg = `*New Order from Andhra Naturels* 🍃\n\n`;
+            whatsappMsg += `*Customer Details:*\n`;
+            whatsappMsg += `👤 Name: ${name}\n`;
+            whatsappMsg += `📞 Phone: ${phone}\n`;
+            whatsappMsg += `📍 Delivery Address: ${address}\n\n`;
+            whatsappMsg += `*Order Items:*\n`;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.qty;
+                orderTotal += itemTotal;
+                whatsappMsg += `🛒 ${item.name} (Qty: ${item.qty}) - ₹${itemTotal}\n`;
+            });
+            
+            whatsappMsg += `\n*Total Amount: ₹${orderTotal}*\n\n`;
+            whatsappMsg += `Please confirm my order and share the payment details/UPI scanner. Thank you!`;
+            
+            const encodedMsg = encodeURIComponent(whatsappMsg);
+            const targetNumber = "918919695571";
+            window.open(`https://wa.me/${targetNumber}?text=${encodedMsg}`, '_blank');
+            
+            cart = [];
+            updateCartUI();
+            document.getElementById('billing-form').reset();
+            toggleCartModal();
+        }
+    </script>
+</body>
+</html>

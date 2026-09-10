@@ -40,7 +40,6 @@
     
 </head>
 <body class="text-gray-800 antialiased overflow-x-hidden">
-
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 px-6 lg:px-12 bg-black">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <a href="#" onclick="goHome(event)" class="text-2xl font-serif font-bold text-brand-dark flex items-center gap-2">
@@ -717,7 +716,12 @@
             </form>
         </div>
     </div>
-
+<!-- Back to Top Button -->
+<button id="backToTopBtn" onclick="scrollToTop()" class="fixed right-6 bottom-24 z-50 hidden bg-[#0f172a] text-white p-3 rounded-full shadow-lg hover:bg-slate-800 transition-all duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+</button>
 <script src="javascript.js"></script>
 </body>
 </html>

@@ -110,7 +110,25 @@
             // Scroll to top to see the new category cleanly
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+// Get the button
+const backToTopBtn = document.getElementById('backToTopBtn');
 
+// Show button when user scrolls down 300px from the top
+window.onscroll = function() {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        backToTopBtn.classList.remove('hidden');
+    } else {
+        backToTopBtn.classList.add('hidden');
+    }
+};
+
+// Scroll smoothly to the top when clicked
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
         function goHome(e) {
             if(e && e.preventDefault) e.preventDefault();
             categoryView.classList.add('hidden');

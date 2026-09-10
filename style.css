@@ -1,0 +1,70 @@
+
+        /* Custom Styles & Utilities */
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, .font-serif { font-family: 'Playfair Display', serif; }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Parallax Backgrounds */
+        .parallax-hero {
+            background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1920');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .parallax-why {
+            background-image: url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&q=80&w=1920');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Nav Transition */
+        #navbar { transition: all 0.3s ease; }
+        .nav-scrolled {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+        }
+
+        /* SPA Transitions */
+        .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
